@@ -1,5 +1,3 @@
-app.py
-
 #!/usr/bin/python3
 '''Flask app to be created with reports and views 
 '''
