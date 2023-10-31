@@ -120,7 +120,7 @@ Place object modified
     else:
         abort(404)
 
-Error fixing
+
 @app_views.errorhandler(404)
 def not_found(error):
     '''
