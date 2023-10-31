@@ -7,7 +7,8 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column
 from sqlalchemy import DateTime
 from sqlalchemy import String
-
+import uuid
+import hashlib
 Base = declarative_base()
 
 
@@ -46,14 +47,24 @@ class BaseModel:
         models.new_storage.new(self)
         models.new_storage.save()
 
-    def to_dict(self):
+    def to_dict(self, save_fs=None):
         """dictionary will be return
         """
         dictionary_mine = self.__dict__.copy()
-        dictionary_mine["__class__"] = str(type(self).__name__)
-        dictionary_mine["created_at"] = self.created_at.isoformat()
-        dictionary_mine["updated_at"] = self.updated_at.isoformat()
-        dictionary_mine.pop("_sa_instance_state", None)
+
+        if "created_at" in dictionary_mine:
+            dictionary_mine["created_at"] = dictionary_mine["created_at"].strfttime(time)
+        if "updated_at" in dictionary_mine:
+            dictionary_mine["updated_at"] = dictionary_mine["updated_at"].strftime(time)
+
+        dictionary_mine ["__class__"] = self.__class__.__name__
+        if "_sa_instance_state" in dictionary_mine:
+            del dictionary_mine["_sa_instance_state"]
+
+        if save_fs is None:
+            if "password" in dictionary_mine:
+                del dictionary_mine["password"]
+
         return dictionary_mine
 
     def delete(self):

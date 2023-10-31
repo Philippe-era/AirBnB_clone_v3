@@ -1,7 +1,7 @@
 
 #!/usr/bin/python3
 """
-State object
+State object creation in place
 """
 
 from flask import abort, jsonify, request
@@ -17,8 +17,8 @@ def get_all_states():
     """
     states = storage.all(State).values()
     
-    state_list = [state.to_dict() for state in states]
-    return jsonify(state_list)
+    listed_states = [state.to_dict() for state in states]
+    return jsonify(listed_states)
 
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def get_state(state_id):

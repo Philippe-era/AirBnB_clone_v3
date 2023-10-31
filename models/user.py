@@ -5,7 +5,8 @@ from models.base_model import BaseModel
 from sqlalchemy.orm import relationship
 from sqlalchemy import Column
 from sqlalchemy import String
-
+from hashlib
+from os import getenv
 
 class User(BaseModel, Base):
     """Class database of the class and the niherittable information
@@ -26,3 +27,13 @@ class User(BaseModel, Base):
     last_name = Column(String(128))
     places = relationship("Place", backref="user", cascade="delete")
     reviews = relationship("Review", backref="user", cascade="delete")
+
+    def __init__(self, *args, **kwargs):
+        """ constructpr for the task
+            
+            Args:
+            kwargs: Additional keyword 
+
+        """
+        if kwargs:
+            pwd
