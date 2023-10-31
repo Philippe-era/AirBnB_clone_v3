@@ -20,6 +20,7 @@ class User(BaseModel, Base):
         places (sqlalchemy relationship): the place relationship
         reviews (sqlalchemy relationship): the user review relationship
     """
+    if models.storage_t == 'db':
     __tablename__ = "users"
     email = Column(String(128), nullable=False)
     password = Column(String(128), nullable=False)
@@ -27,6 +28,12 @@ class User(BaseModel, Base):
     last_name = Column(String(128))
     places = relationship("Place", backref="user", cascade="delete")
     reviews = relationship("Review", backref="user", cascade="delete")
+    else:
+        email = ""
+        password = ""
+        first_name = ""
+        last_name = ""
+
 
     def __init__(self, *args, **kwargs):
         """ constructpr for the task
@@ -36,4 +43,9 @@ class User(BaseModel, Base):
 
         """
         if kwargs:
-            pwd
+            pwd:
+                secure = hashlib.md5()
+                secure.update.(pwd.encode("utf-8"))
+                secure_pass = secure.hexdigest()
+                kwargs['password'] = secure_pass
+        super().__init__(*args, **kwargs)
